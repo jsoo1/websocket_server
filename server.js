@@ -1,5 +1,5 @@
 #! /usr/local/bin/node
-//
+
 // Copyright (c) 2021 Steve Seguin. All Rights Reserved.
 //  Use of this source code is governed by the APGLv3 open-source 
 //
@@ -23,13 +23,18 @@
 
 "use strict";
 var fs = require("fs");
+var {env: {websocket_server_pidfile},pid} = require("process");
 var https = require("https");
 var express = require("express");
 var app = express();
 var WebSocket = require("ws");
 
-const key = fs.readFileSync("/etc/letsencrypt/live/wss.contribute.cam/privkey.pem"); /// UPDATE THIS PATH
-const cert = fs.readFileSync("/etc/letsencrypt/live/wss.contribute.cam/fullchain.pem"); /// UPDATE THIS PATH
+console.log(`pid: ${pid}
+websocket_server_pidfile: ${websocket_server_pidfile}`);
+
+if (websocket_server_pidfile !== undefined) {
+  fs.writeFile(websocket_server_pidfile, `${pid}`, () => console.log(`wrote ${websocket_server_pidfile}`));
+}
 
 var server = https.createServer({key,cert}, app);
 var websocketServer = new WebSocket.Server({ server });
