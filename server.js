@@ -38,16 +38,17 @@ const {
 
 if (websocket_server_privkey === undefined) {
   console.error('websocket_server_privkey not set');
+
   exit(1);
 }
 
 if (websocket_server_fullchain === undefined) {
   console.error('websocket_server_fullchain not set');
+
   exit(1);
 }
 
-console.log(`pid: ${pid}
-websocket_server_pidfile: ${websocket_server_pidfile}`);
+console.log({pid, websocket_server_pidfile});
 
 if (websocket_server_pidfile !== undefined) {
   fs.writeFile(websocket_server_pidfile, `${pid}`, () => console.log(`wrote ${websocket_server_pidfile}`));
