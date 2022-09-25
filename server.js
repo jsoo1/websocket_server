@@ -1,3 +1,4 @@
+#! /usr/local/bin/node
 //
 // Copyright (c) 2021 Steve Seguin. All Rights Reserved.
 //  Use of this source code is governed by the APGLv3 open-source 
