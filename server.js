@@ -23,7 +23,7 @@
 
 "use strict";
 var fs = require("fs");
-var {env: {websocket_server_pidfile},pid} = require("process");
+var {env: {websocket_server_pidfile, websocket_server_port}, pid} = require("process");
 var https = require("https");
 var express = require("express");
 var app = express();
@@ -35,6 +35,8 @@ websocket_server_pidfile: ${websocket_server_pidfile}`);
 if (websocket_server_pidfile !== undefined) {
   fs.writeFile(websocket_server_pidfile, `${pid}`, () => console.log(`wrote ${websocket_server_pidfile}`));
 }
+
+const port = websocket_server_port !== undefined ? websocket_server_port : 3000;
 
 var server = https.createServer({key,cert}, app);
 var websocketServer = new WebSocket.Server({ server });
@@ -48,6 +50,6 @@ websocketServer.on('connection', (webSocketClient) => {
             });
     });
 });
-server.listen(443, () => {console.log(`Server started on port 443`) });
+server.listen(port, () => {console.log(`Server started on port ${port}`) });
 
 
