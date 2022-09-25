@@ -23,11 +23,28 @@
 
 "use strict";
 var fs = require("fs");
-var {env: {websocket_server_pidfile, websocket_server_port}, pid} = require("process");
+var {env, pid, exit} = require("process");
 var https = require("https");
 var express = require("express");
 var app = express();
 var WebSocket = require("ws");
+
+const {
+  websocket_server_pidfile,
+  websocket_server_port,
+  websocket_server_privkey,
+  websocket_server_fullchain,
+} = env;
+
+if (websocket_server_privkey === undefined) {
+  console.error('websocket_server_privkey not set');
+  exit(1);
+}
+
+if (websocket_server_fullchain === undefined) {
+  console.error('websocket_server_fullchain not set');
+  exit(1);
+}
 
 console.log(`pid: ${pid}
 websocket_server_pidfile: ${websocket_server_pidfile}`);
@@ -36,7 +53,16 @@ if (websocket_server_pidfile !== undefined) {
   fs.writeFile(websocket_server_pidfile, `${pid}`, () => console.log(`wrote ${websocket_server_pidfile}`));
 }
 
-const port = websocket_server_port !== undefined ? websocket_server_port : 3000;
+const port = websocket_server_port !== undefined ? parseInt(websocket_server_port, 10) : 3000;
+
+if (isNaN(port)) {
+  console.error(`parsing port failed, got: ${websocket_server_port}`);
+
+  exit(1);
+}
+
+const key = fs.readFileSync(websocket_server_privkey);
+const cert = fs.readFileSync(websocket_server_fullchain);
 
 var server = https.createServer({key,cert}, app);
 var websocketServer = new WebSocket.Server({ server });
