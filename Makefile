@@ -1,7 +1,7 @@
 PREFIX = /usr/local
 
 websocket_server: websocket_server.js
-	echo '#! /usr/bin/env node' | cat - websocket_server.js > $@
+	echo '#! /usr/local/bin/node' | cat - websocket_server.js > $@
 
 websocket_server.js: node_modules
 	npx webpack -- --stats-error-details

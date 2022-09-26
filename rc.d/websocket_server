@@ -9,8 +9,8 @@ name="websocket_server"
 rcvar=${name}_enable
 pidfile="/var/run/${name}.pid"
 
-command="/usr/sbin/daemon /usr/local/bin/websocket_server"
-command_args="-P ${pidfile} -o /var/log/${name}"
+command="/usr/sbin/daemon"
+command_args="/usr/local/bin/websocket_server -p ${pidfile} -o /var/log/${name}.log"
 
 load_rc_config $name
 : ${websocket_server_enable:="NO"}
