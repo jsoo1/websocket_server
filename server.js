@@ -54,10 +54,10 @@ if (websocket_server_pidfile !== undefined) {
   fs.writeFile(websocket_server_pidfile, `${pid}`, () => console.log(`wrote ${websocket_server_pidfile}`));
 }
 
-const port = websocket_server_port !== undefined ? parseInt(websocket_server_port, 10) : 3000;
+const port = websocket_server_port !== undefined ? parseInt(websocket_server_port, 10);
 
 if (isNaN(port)) {
-  console.error(`parsing port failed, got: ${websocket_server_port}`);
+  console.error(`parsing websocket_server_port failed, got: ${websocket_server_port}`);
 
   exit(1);
 }
