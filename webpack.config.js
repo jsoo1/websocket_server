@@ -6,4 +6,5 @@ module.exports = {
     path: __dirname,
     filename: 'websocket_server.js',
   },
+  ignoreWarnings: [ { file: /express\/lib\/view.js/ } ],
 };
