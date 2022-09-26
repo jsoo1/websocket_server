@@ -6,8 +6,4 @@ module.exports = {
     path: __dirname,
     filename: 'websocket_server.js',
   },
-  externalsPresets: { node: true, },
-  externals: {
-    express: 'commonjs express',
-  },
-}; 
+};
