@@ -7,8 +7,8 @@
 // su
 // pkg update
 // pkg upgrade
-// pkg install npm
-// make && make install
+// pkg install npm doas
+// make && doas make install
 //
 //// Finally, if using this with a ninja deploy, update index.html of the ninja installation as needed, such as with:
 //  session.wss = "wss://wss.contribute.cam:443";

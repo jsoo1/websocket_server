@@ -1,7 +1,8 @@
 #! /bin/sh
-
+#
 # PROVIDE: websocket_server
-# REQUIRE: netwait
+# REQUIRE: LOGIN NETWORKING DAEMON
+# KEYWORD: shutdown
 
 . /etc/rc.subr
 
@@ -10,7 +11,7 @@ rcvar=${name}_enable
 pidfile="/var/run/${name}.pid"
 
 command="/usr/sbin/daemon"
-command_args="-P ${pidfile} -o /var/log/${name}.log /usr/local/bin/websocket_server"
+command_args="-P ${pidfile} -T ${name} /usr/local/bin/websocket_server"
 
 load_rc_config $name
 : ${websocket_server_enable:="NO"}
