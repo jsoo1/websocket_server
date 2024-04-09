@@ -17,7 +17,5 @@ load_rc_config $name
 : ${websocket_server_enable:="NO"}
 
 export websocket_server_port
-export websocket_server_privkey
-export websocket_server_fullchain
 
 run_rc_command "$1"

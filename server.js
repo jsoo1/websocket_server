@@ -18,28 +18,12 @@
 "use strict";
 var fs = require("fs");
 var {env, pid, exit} = require("process");
-var https = require("https");
+var http = require("http");
 var express = require("express");
 var app = express();
 var WebSocket = require("ws");
 
-const {
-  websocket_server_port,
-  websocket_server_privkey,
-  websocket_server_fullchain,
-} = env;
-
-if (websocket_server_privkey === undefined) {
-  console.error('websocket_server_privkey not set');
-
-  exit(1);
-}
-
-if (websocket_server_fullchain === undefined) {
-  console.error('websocket_server_fullchain not set');
-
-  exit(1);
-}
+const { websocket_server_port } = env;
 
 const port = parseInt(websocket_server_port, 10);
 
@@ -49,10 +33,7 @@ if (isNaN(port)) {
   exit(1);
 }
 
-const key = fs.readFileSync(websocket_server_privkey);
-const cert = fs.readFileSync(websocket_server_fullchain);
-
-var server = https.createServer({key,cert}, app);
+var server = http.createServer(app);
 var websocketServer = new WebSocket.Server({ server });
 
 websocketServer.on('connection', (webSocketClient) => {
